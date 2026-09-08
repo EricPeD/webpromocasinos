@@ -1,0 +1,64 @@
+---
+import type { Casino } from '../data/casinos';
+
+interface Props {
+  casino: Casino;
+  lang: 'es' | 'en';
+  ctaLabel: string;
+}
+
+const { casino, lang, ctaLabel } = Astro.props;
+
+function renderStars(rating: number) {
+  const full = Math.floor(rating);
+  const hasHalf = rating - full >= 0.25 && rating - full < 0.75;
+  const half = rating - full >= 0.75 ? 1 : 0;
+  let out = '';
+  for (let i = 0; i < full + half; i++) out += '★';
+  if (hasHalf) out += '½';
+  for (let i = 0; i < 5 - (full + half + (hasHalf ? 0.5 : 0)); i++) out += '☆';
+  return out;
+}
+---
+
+<article class="flex flex-col gap-3 rounded-2xl border border-border bg-bg-card p-6 transition duration-200 hover:-translate-y-1 hover:border-[rgba(167,139,250,0.6)] hover:bg-bg-card-hover hover:shadow-card">
+  <div class="flex items-center gap-3.5">
+    <div class="grid size-14 shrink-0 place-items-center rounded-xl border border-border bg-bg text-[2.4rem]">
+      {casino.logo}
+    </div>
+    <div>
+      <h3 class="text-xl font-extrabold tracking-tight">{casino.name}</h3>
+      <div class="flex items-center gap-2 text-sm" aria-label={`${casino.rating} / 5`}>
+        <span class="text-gold tracking-[2px]">{renderStars(casino.rating)}</span>
+        <span class="font-semibold text-muted">{casino.rating.toFixed(1)}</span>
+      </div>
+    </div>
+    <span class="rounded-full border border-[rgba(167,139,250,0.35)] bg-[rgba(167,139,250,0.12)] px-3 py-1 text-xs font-semibold text-[#c4b5fd]">
+      👍 {lang === 'es' ? 'Recomendado' : 'Recommended'}
+    </span>
+  </div>
+
+  <div class="rounded-[10px] border border-dashed border-[rgba(255,210,63,0.4)] bg-[rgba(255,210,63,0.08)] px-3.5 py-2.5 text-[1.05rem] font-bold text-gold">
+    {casino.bonus[lang]}
+  </div>
+  <p class="text-[0.95rem] text-muted">{casino.description[lang]}</p>
+
+  <ul class="flex list-none flex-wrap gap-2">
+    {casino.flags[lang].map((flag) => (
+      <li class="rounded-full border border-[rgba(52,211,153,0.3)] bg-[rgba(52,211,153,0.12)] px-2.5 py-1 text-xs font-semibold text-green">
+        {flag}
+      </li>
+    ))}
+  </ul>
+
+  <a
+    class="group relative isolate mt-auto inline-flex min-h-[72px] w-full animate-cta-gradient animate-cta-glow items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-br from-accent via-primary-dark to-accent-deep bg-[length:200%_200%] px-7 text-[1.4rem] font-black tracking-wide text-white uppercase transition-transform duration-200 hover:-translate-y-[3px] hover:brightness-110 hover:saturate-125 active:translate-y-[-1px] active:brightness-95 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-gold btn-shimmer"
+    href={casino.referralUrl}
+    target="_blank"
+    rel="noopener nofollow sponsored"
+  >
+    <span aria-hidden="true" class="text-[1.8rem] leading-none">🎰</span>
+    {ctaLabel}
+    <span aria-hidden="true" class="text-[1.7rem] leading-none transition-transform duration-200 group-hover:translate-x-[5px]">→</span>
+  </a>
+</article>
