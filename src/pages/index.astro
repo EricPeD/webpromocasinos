@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import CasinoCard from '../components/CasinoCard.astro';
+import { casinos } from '../data/casinos';
+
+const lang = 'es';
+const title = 'Mejores casinos online 2026 | Bonos de bienvenida exclusivos';
+const description =
+  'Descubre los mejores casinos online con bonos de bienvenida exclusivos. Juega con responsabilidad.';
+---
+
+<Layout title={title} description={description} lang={lang} path="/">
+  <Header currentLang={lang} />
+
+  <main>
+    <section class="hero">
+      <span class="badge">🔥 Ofertas 2026</span>
+      <h1>Los mejores casinos online con bonos exclusivos</h1>
+      <p class="hero-sub">Comparamos los bonos más generosos para que juegues con la máxima ventaja.</p>
+    </section>
+
+    <section class="grid-list">
+      {casinos.map((casino) => (
+        <CasinoCard casino={casino} lang={lang} ctaLabel="Jugar ahora" />
+      ))}
+    </section>
+
+    <div class="disclaimer">
+      18+ Juega con responsabilidad. El juego puede ser adictivo. Este sitio utiliza enlaces de afiliados.
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 24px 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    max-width: 24ch;
+  }
+
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 52ch;
+  }
+
+  .grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+</style>

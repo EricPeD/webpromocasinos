@@ -1,0 +1,60 @@
+---
+import LanguageToggle from './LanguageToggle.astro';
+
+interface Props {
+  currentLang: 'es' | 'en';
+}
+
+const { currentLang } = Astro.props;
+const brandName = currentLang === 'es' ? 'Mejores casinos' : 'Best casinos';
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href={currentLang === 'es' ? '/' : '/en/'} class="brand">
+      <span class="brand-logo">🎰</span>
+      <span class="brand-name">{brandName}</span>
+    </a>
+    <LanguageToggle currentLang={currentLang} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    background: rgba(15, 18, 32, 0.8);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-logo {
+    font-size: 1.6rem;
+  }
+
+  .brand-name {
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+</style>

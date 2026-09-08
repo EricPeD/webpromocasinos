@@ -1,0 +1,45 @@
+---
+interface Props {
+  currentLang: 'es' | 'en';
+}
+
+const { currentLang } = Astro.props;
+const targetPath = currentLang === 'es' ? '/en/' : '/';
+const targetLabel = currentLang === 'es' ? 'EN' : 'ES';
+---
+
+<a class="lang-toggle" href={targetPath} aria-label="Switch language">
+  <span class={currentLang === 'es' ? 'active' : ''}>ES</span>
+  <span class="sep">|</span>
+  <span class={currentLang === 'en' ? 'active' : ''}>EN</span>
+</a>
+
+<style>
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .lang-toggle:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .lang-toggle .active {
+    color: var(--primary);
+  }
+
+  .sep {
+    color: var(--border);
+  }
+</style>

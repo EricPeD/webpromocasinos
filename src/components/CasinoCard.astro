@@ -1,0 +1,153 @@
+---
+import type { Casino } from '../data/casinos';
+
+interface Props {
+  casino: Casino;
+  lang: 'es' | 'en';
+  ctaLabel: string;
+}
+
+const { casino, lang, ctaLabel } = Astro.props;
+const stars = Math.round(casino.rating);
+
+function renderStars(rating: number) {
+  const full = Math.floor(rating);
+  const hasHalf = rating - full >= 0.25 && rating - full < 0.75;
+  const half = rating - full >= 0.75 ? 1 : 0;
+  let out = '';
+  for (let i = 0; i < full + half; i++) out += '★';
+  if (hasHalf) out += '½';
+  out += '';
+  for (let i = 0; i < 5 - (full + half + (hasHalf ? 0.5 : 0)); i++) out += '☆';
+  return out;
+}
+---
+
+<article class="casino-card">
+  <div class="card-top">
+    <div class="logo">{casino.logo}</div>
+    <div>
+      <h3 class="name">{casino.name}</h3>
+      <div class="rating" aria-label={`${casino.rating} / 5`}>
+        <span class="stars">{renderStars(casino.rating)}</span>
+        <span class="score">{casino.rating.toFixed(1)}</span>
+      </div>
+    </div>
+    <span class="badge">👍 {lang === 'es' ? 'Recomendado' : 'Recommended'}</span>
+  </div>
+
+  <div class="bonus">{casino.bonus[lang]}</div>
+  <p class="desc">{casino.description[lang]}</p>
+
+  <ul class="flags">
+    {casino.flags[lang].map((flag) => (
+      <li>{flag}</li>
+    ))}
+  </ul>
+
+  <a class="btn-primary cta" href={casino.referralUrl} target="_blank" rel="noopener nofollow sponsored">
+    {ctaLabel}
+    <span aria-hidden="true">→</span>
+  </a>
+</article>
+
+<style>
+  .casino-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .casino-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(124, 92, 255, 0.5);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo {
+    font-size: 2.4rem;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+
+  .name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .stars {
+    color: var(--primary);
+    letter-spacing: 2px;
+  }
+
+  .score {
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .bonus {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(255, 210, 63, 0.08);
+    border: 1px dashed rgba(255, 210, 63, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+  }
+
+  .desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .flags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .flags li {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--green);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+  }
+
+  .cta {
+    margin-top: auto;
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import CasinoCard from '../../components/CasinoCard.astro';
+import { casinos } from '../../data/casinos';
+
+const lang = 'en';
+const title = 'Best online casinos 2026 | Exclusive welcome bonuses';
+const description =
+  'Discover the best online casinos with exclusive welcome bonuses. Play responsibly.';
+---
+
+<Layout title={title} description={description} lang={lang} path="/en/">
+  <Header currentLang={lang} />
+
+  <main>
+    <section class="hero">
+      <span class="badge">🔥 2026 Offers</span>
+      <h1>Best online casinos with exclusive bonuses</h1>
+      <p class="hero-sub">
+        We compare the most generous bonuses so you can play with the maximum advantage.
+      </p>
+    </section>
+
+    <section class="grid-list">
+      {casinos.map((casino) => (
+        <CasinoCard casino={casino} lang={lang} ctaLabel="Play now" />
+      ))}
+    </section>
+
+    <div class="disclaimer">
+      18+ Play responsibly. Gambling can be addictive. This site uses affiliate links.
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 24px 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    max-width: 24ch;
+  }
+
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 52ch;
+  }
+
+  .grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+</style>
