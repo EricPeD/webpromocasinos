@@ -25,7 +25,7 @@ export const casinos: Casino[] = [
       es: 'Deportes, casino en vivo y slots con promociones diarias.',
       en: 'Sports, live casino and slots with daily promotions.',
     },
-    referralUrl: 'https://betpandacasino.io/?referral=3GGGX4X&type=registration&modal=user&isReferral=true',
+    referralUrl: ABETPANDA_REFERRAL,
     rating: 4.8,
     flags: {
       es: ['Apuestas deportivas', 'Casino en vivo', 'Bono de bienvenida'],
@@ -44,7 +44,7 @@ export const casinos: Casino[] = [
       es: 'Casino con licencia de Curazao, más de 6000 juegos de 100+ proveedores, casino en vivo, apuestas deportivas y app móvil.',
       en: 'Curaçao-licensed casino with 6000+ games from 100+ providers, live casino, sports betting and mobile app.',
     },
-    referralUrl: "https://refpa3665.com/L?tag=d_5484838m_2170c_Trisss",
+    referralUrl: MELBET_REFERRAL,
     rating: 4.5,
     flags: {
       es: ['Casino en vivo', 'Más de 6000 juegos', 'App móvil', 'Bono de bienvenida'],

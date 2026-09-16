@@ -1,0 +1,61 @@
+---
+import { socialLinks, type SocialLink } from '../data/links';
+
+interface Props {
+  lang: 'es' | 'en';
+  variant?: 'compact' | 'large';
+}
+
+const { lang, variant = 'compact' } = Astro.props;
+
+const icons: Record<string, string> = {
+  discord:
+    'M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515a.07.07 0 0 0-.08.038c-.21.387-.444.888-.61 1.285a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.285a.078.078 0 0 0-.08-.038a19.736 19.736 0 0 0-4.885 1.515a.07.07 0 0 0-.032.032C.784 8.885.521 13.292.733 17.65a.083.083 0 0 0 .032.058a19.885 19.885 0 0 0 5.99 3.029a.079.079 0 0 0 .085-.03a14.29 14.29 0 0 0 1.012-1.68a.077.077 0 0 0-.042-.106a13.095 13.095 0 0 1-1.601-.763a.076.076 0 0 1-.008-.127c.108-.084.216-.17.319-.255a.074.074 0 0 1 .078-.01c3.402 1.558 7.09 1.558 10.447 0a.075.075 0 0 1 .079.009c.103.085.211.172.32.256a.076.076 0 0 1-.007.127a12.3 12.3 0 0 1-1.602.762a.077.077 0 0 0-.041.107c.309.586.669 1.149 1.011 1.679a.078.078 0 0 0 .085.032a19.84 19.84 0 0 0 6.008-3.029a.077.077 0 0 0 .031-.059c.27-5.007-.447-9.392-1.84-13.247a.07.07 0 0 0-.032-.031ZM8.02 15.33c-1.183 0-2.157-1.108-2.157-2.465c0-1.357.953-2.465 2.157-2.465c1.204 0 2.179 1.108 2.157 2.465c0 1.357-.953 2.465-2.157 2.465Zm7.98 0c-1.183 0-2.157-1.108-2.157-2.465c0-1.357.955-2.465 2.157-2.465c1.204 0 2.179 1.108 2.157 2.465c0 1.357-.953 2.465-2.157 2.465Z',
+  kick: 'M1.333 0h8v5.333H12V2.667h2.667V0h8v8H20v2.667h-2.667v2.666H20V16h2.667v8h-8v-2.667H12v-2.666H9.333V24h-8Z',
+  youtube:
+    'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
+};
+---
+
+{
+  variant === 'compact' ? (
+    <ul class="flex list-none items-center gap-2">
+      {socialLinks.map((link) => (
+        <li>
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.label[lang]}
+            title={link.label[lang]}
+            class="inline-flex size-9 items-center justify-center rounded-lg border border-border bg-bg transition duration-150 hover:-translate-y-[1px] hover:bg-bg-card"
+            style={`color:${link.color}`}
+          >
+            <svg class="size-[1.15rem]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d={icons[link.id === 'youtube-trisgambling' || link.id === 'youtube-triskkkis' ? 'youtube' : link.id]} />
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <ul class="grid list-none grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3.5 sm:grid-cols-2" style="max-width:560px">
+      {socialLinks.map((link) => (
+        <li>
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex w-full items-center justify-center gap-3 rounded-full border border-border bg-bg-card px-6 py-3.5 text-[1.05rem] font-bold transition duration-200 hover:-translate-y-[2px] hover:bg-bg-card-hover hover:shadow-card"
+            style={`border-color:${link.color}55`}
+          >
+            <svg class="size-[1.35rem]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={`color:${link.color}`}>
+              <path d={icons[link.id === 'youtube-trisgambling' || link.id === 'youtube-triskkkis' ? 'youtube' : link.id]} />
+            </svg>
+            <span>{link.label[lang]}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

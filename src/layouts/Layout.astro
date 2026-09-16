@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { title, description, lang, path } = Astro.props;
-const canonicalURL = new URL(path, Astro.site ?? 'https://www.tuweb.com');
+const canonicalURL = new URL(path, Astro.site ?? 'https://triskis.surge.sh');
 ---
 
 <!doctype html>
